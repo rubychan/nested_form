@@ -2,7 +2,7 @@ module NestedForm
   class Builder < ActionView::Helpers::FormBuilder
     def link_to_add(name, association)
       @fields ||= {}
-      @template.after_nested_form do
+      if @fields[association]
         model_object = object.class.reflect_on_association(association).klass.new
         @template.concat(%Q[<div id="#{association}_fields_blueprint" style="display: none">])
         fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
